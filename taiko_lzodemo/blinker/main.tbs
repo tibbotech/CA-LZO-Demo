@@ -1,0 +1,6 @@
+include "global.tbh"
+
+'====================================================================
+sub on_sys_init()
+	pat.play("RG~",PL_PAT_CANINT)
+end sub

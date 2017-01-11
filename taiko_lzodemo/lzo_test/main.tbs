@@ -1,0 +1,33 @@
+include "global.tbh"
+
+'====================================================================
+sub on_sys_init()
+	dim f as word
+	dim s1,s2,s3,s4 as string(128)
+	dim input_len,output_len,num_sectors_i as dword
+	dim result,f2 as byte
+	dim second_half as no_yes
+	dim xx as word
+
+	pat.play("B-B-B",PL_PAT_CANINT)
+	
+	'prepare compressed data
+	romfile.open("blinker_compressed.bin")
+	if romfile.size=0 then sys.halt
+		
+	num_sectors_i=romfile.size/256
+	if romfile.size mod 256 then
+		num_sectors_i=num_sectors_i+1
+	end if
+	for f=0 to num_sectors_i-1
+		s1=romfile.getdata(128)
+		fd.setbuffer(s1,0)
+		s1=romfile.getdata(128)
+		fd.setbuffer(s1,128)
+		fd.setsector(f)	
+	next f
+
+	'compress
+	input_len=romfile.size
+	fd.copyfirmwarelzo(input_len)
+end sub
