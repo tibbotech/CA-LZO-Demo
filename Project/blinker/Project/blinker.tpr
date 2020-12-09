@@ -1,6 +1,6 @@
 [project]
 platform = TPP3W(G2)
-src_lib_ver = 2_01_03
+src_lib_ver = 2_01_04
 name = blinker
 output = blinker.tpc
 debug = off
